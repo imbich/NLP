@@ -60,7 +60,7 @@
 
 ## Kết quả quan sát
 
-1. $\texttt{SimpleTokenizer}$ hoạt động tốt cho trường hợp dấu cơ bản, nhưng khó xử lí khi chuỗi phức tập (ví dụ: $\texttt{isn't}$ $\rightarrow$ $\texttt{["isn't"]}$ thay vì $\texttt{["isn", "'", "t"]}$).
+1. $\texttt{SimpleTokenizer}$ hoạt động tốt cho trường hợp dấu cơ bản, nhưng khó xử lí khi chuỗi phức tập 
 
 2. $\texttt{RegexTokenizer}$ tách token tốt hơn, nhận diện từ + dấu câu rõ ràng, xử lí số (123) và từ viết tắt dễ hơn.
 
@@ -68,7 +68,7 @@
 
 - $\texttt{SimpleTokenizer}$: tách từ + dấu câu nhưng đôi khi giữ nguyên dấu ' trong từ ghép.
 
-- $\texttt{RegexTokenizer}$: output đa dạng và chính xác hơn, ví dụ $\texttt{"don't"}$ $\rightarrow$ $\texttt{["don", "'", "t"]}$.
+- $\texttt{RegexTokenizer}$: output đa dạng và chính xác hơn.
 
 <pre>
 ```
