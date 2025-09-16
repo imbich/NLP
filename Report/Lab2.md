@@ -18,35 +18,35 @@
 
         - $\texttt{transform(self, documents: list[str])}$ $\rightarrow$ $\texttt{list[list[int]]}$ $\rightarrow$ biến đổi văn bản thành vector đếm.
 
-        - <pre>fit_transform(self, corpus: list[str])</pre> $\rightarrow$ $\texttt{list[list[int]]}$ $\rightarrow$ kết hợp cả $\texttt{fit}$ và $\texttt{transform}$.
+        - `fit_transform(self, corpus: list[str])` $\rightarrow$ $\texttt{list[list[int]]}$ $\rightarrow$ kết hợp cả $\texttt{fit}$ và $\texttt{transform}$.
 
 - Task 2: Cài đặt $\texttt{CountVectorizer}$
 
-    - Tạo file <pre>src/representations/count_vectorizer.py</pre>
+    - Tạo file `src/representations/count_vectorizer.py`
 
     - Xây dựng class $\texttt{CountVectorizer}$ kế thừa $\texttt{Vectorizer}$:
 
         - Hàm khởi tạo nhận một $\texttt{Tokenizer}$
 
-        - Thuộc tính <pre>vocabulary_</pre> (dict) để ánh xạ từ $\rightarrow$ chỉ số.
+        - Thuộc tính `vocabulary_` (dict) để ánh xạ từ $\rightarrow$ chỉ số.
 
     - Cài đặt các phương thức:
 
-        - $\texttt{fit}$: duyệt qua toàn bộ corpus, tokenize từng văn bản và xây dựng <pre>vocabulary_</pre>.
+        - $\texttt{fit}$: duyệt qua toàn bộ corpus, tokenize từng văn bản và xây dựng `vocabulary_`.
 
-        - $\texttt{transform}$: tạo vector đếm cho mỗi văn bản dựa trên <pre>{vocabulary_}</pre>.
+        - $\texttt{transform}$: tạo vector đếm cho mỗi văn bản dựa trên `{vocabulary_}`.
 
-        - <pre>fit_transform</pre>: gọi lần lượt $\texttt{fit}$ và $\texttt{transform}$.
+        - `fit_transform`: gọi lần lượt $\texttt{fit}$ và $\texttt{transform}$.
 
 - Task 3: Evaluation
 
-    - Tạo file <pre>test/lab2_test.py</pre>
+    - Tạo file `test/lab2_test.py`
 
     - Import $\texttt{RegexTokenizer}$ từ Lab1 và $\texttt{CountVectorizer}$ từ Lab 2.
 
     - Thử nghiệm trên corpus mẫu:
     
-    <pre> 
+    <pre>
     ```python 
     corpus = [ 
         "I love NLP.",
@@ -61,7 +61,7 @@
 
         - Document-term matrix (biểu diễn vector cho từng câu).
 
-         <pre> 
+        <pre>
         ```python
         ==========With simple corpus:==========
        
@@ -83,7 +83,7 @@
 
 ## 4. Đóng góp cá nhân
 
-- Viết test để kiểm chứng hoạt động của $\texttt{CountVectorizer}$ với dữ liệu thực hiện <pre>UD_English-EWT</pre>
+- Viết test để kiểm chứng hoạt động của $\texttt{CountVectorizer}$ với dữ liệu thực hiện `UD_English-EWT`
 
 <pre>
 ```

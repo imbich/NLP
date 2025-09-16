@@ -20,7 +20,7 @@
 
 - Là abstract base class với phương thức $\texttt{tokenize(self, text: str) -> list[str]}$.
 
-### 2. <pre>SimpleTokenizer (src/preprocessing/simple\_tokenizer.py)</pre>
+### 2. `SimpleTokenizer (src/preprocessing/simple\_tokenizer.py)`
 - Kế thừa từ $\texttt{Tokenizer}$.
 - Cách hoạt động:
     
@@ -32,15 +32,15 @@
 
 - Ví dụ: $\texttt{"Hello, world!"}$ $\rightarrow$ $\texttt{["hello", ",", "world", "!"]}$.
 
-### 3. <pre>RegexTokenizer (src/preprocessing/regex_tokenizer.py)</pre>
+### 3. `RegexTokenizer (src/preprocessing/regex_tokenizer.py)`
 
 - Cũng kế thừa từ $\texttt{Tokenizer}$
 
-- Dùng regex <pre>\w+|[^\w\s]</pre> để tách token:
+- Dùng regex `\w+|[^\w\s]` để tách token:
 
-    - <pre>\w</pre> bắt từ (bao gồm chữ và số).
+    - `\w` bắt từ (bao gồm chữ và số).
 
-    - <pre>^\w\s</pre> bắt các ký tự đặc biệt không phải chữ-số-khoảng trắng.
+    - `^\w\s` bắt các ký tự đặc biệt không phải chữ-số-khoảng trắng.
 
 - Ưu điểm: gọn hơn, bao phủ nhiều trường hợp hơn so với split thủ công.
 
@@ -54,7 +54,7 @@
 
     - "Let's see how it handles 123 numbers and punctuation!"
 
-- Test trên dữ liệu thực: <pre>{UD_English-EWT}</pre> (500 ký tự đầu tiên).
+- Test trên dữ liệu thực: `{UD_English-EWT}` (500 ký tự đầu tiên).
 
 - So sánh kết quả giữa 2 tokenizer.
 
@@ -64,11 +64,32 @@
 
 2. $\texttt{RegexTokenizer}$ tách token tốt hơn, nhận diện từ + dấu câu rõ ràng, xử lí số (123) và từ viết tắt dễ hơn.
 
-3. Khi áp dụng lên <pre>UD_English-EWT</pre>:
+3. Khi áp dụng lên `UD_English-EWT`:
 
 - $\texttt{SimpleTokenizer}$: tách từ + dấu câu nhưng đôi khi giữ nguyên dấu ' trong từ ghép.
 
 - $\texttt{RegexTokenizer}$: output đa dạng và chính xác hơn, ví dụ $\texttt{"don't"}$ $\rightarrow$ $\texttt{["don", "'", "t"]}$.
+
+<pre>
+```
+Simple Tokenizer Results:
+Hello, world! This is a test. -> ['hello', ',', 'world', '!', 'this', 'is', 'a', 'test', '.']
+NLP is fascinating... isn't it? -> ['nlp', 'is', 'fascinating', '.', '.', '.', "isn't", 'it', '?']
+Let's see how it handles 123 numbers and punctuation! -> ["let's", 'see', 'how', 'it', 'handles', '123', 'numbers', 'and', 'punctuation', '!']
+===============================================
+Regex Tokenizer Results:
+Hello, world! This is a test. -> ['Hello', ',', 'world', '!', 'This', 'is', 'a', 'test', '.']
+NLP is fascinating... isn't it? -> ['NLP', 'is', 'fascinating', '.', '.', '.', 'isn', "'", 't', 'it', '?']
+Let's see how it handles 123 numbers and punctuation! -> ['Let', "'", 's', 'see', 'how', 'it', 'handles', '123', 'numbers', 'and', 'punctuation', '!']
+
+--- Tokenizing Sample Text from UD_English-EWT ---
+Original Sample: Al-Zaman : American forces killed Shaikh Abdullah al-Ani, the preacher at the
+mosque in the town of ...
+SimpleTokenizer Output (first 20 tokens): ['al-zaman', ':', 'american', 'forces', 'killed', 'shaikh', 'abdullah', 'al-ani', ',', 'the', 'preacher', 'at', 'the', 'mosque', 'in', 'the', 'town', 'of', 'qaim', ',']
+RegexTokenizer Output (first 20 tokens): ['Al', '-', 'Zaman', ':', 'American', 'forces', 'killed', 'Shaikh', 'Abdullah', 'al', '-', 'Ani', ',', 'the', 'preacher', 'at', 'the', 'mosque', 'in', 'the'] 
+```
+</pre>
+
 
 ## Đóng góp và học được
 
