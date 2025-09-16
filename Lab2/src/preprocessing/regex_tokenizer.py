@@ -18,6 +18,3 @@ class RegexTokenizer(Tokenizer):
     def tokenize(self, text: str):
         tokens = re.findall(r'\w+|[^\w\s]', text, re.UNICODE)
         return tokens
-    
-regex = RegexTokenizer()
-print(regex.tokenize('Hello, world!'))

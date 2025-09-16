@@ -11,12 +11,19 @@ class Tokenizer(ABC):
 class Vectorizer(ABC):
 
     def fit(self, corpus: list[str]):
-        '''Học từ vựng từ danh sách tài liệu'''
+        '''
+        Learns the vocabulary from a list of ducuments (corpus).
+        '''
         pass
 
     def transform(self, documents: list[str]) -> list[list[int]]:
-        '''Chuyển đổi một danh sách các tài liệu thành danh sách các vector đếm dựa trên từ vựng đã học'''
+        '''
+        Transform a list of documents into a list of count vectors based on the learned vocabulary.
+        '''
         pass
 
     def fit_transform(self, corpus: list[str]) -> list[list[int]]:
+        '''
+        A convernience method that performs fit and then transform on the same data.
+        '''
         pass

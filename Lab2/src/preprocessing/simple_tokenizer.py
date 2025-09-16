@@ -30,5 +30,3 @@ class SimpleTokenizer(Tokenizer):
 
         return result
     
-simp = SimpleTokenizer()
-print(simp.tokenize('Hello, world!'))
