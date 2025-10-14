@@ -1,7 +1,8 @@
 .venv
 
-requirements.txt
 __pycache__/
 
-UD_English-EWT
+Data
 TH1.ipynb
+
+Lab4/results/*
