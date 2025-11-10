@@ -19,7 +19,7 @@
 
 - **Dữ liệu**: Sử dụng một tập dữ liệu nhỏ trong bộ nhớ để đơn giản hóa
 
-<pre>
+```python
 texts = [
     "This movie is fantastic and I love it!",
     "I hate this film, it's terrible.",
@@ -29,7 +29,7 @@ texts = [
     "Could not finish watching, so bad."
     ]
 labels = [1, 0, 1, 0, 1, 0] # 1 for positive, 0 for negative
-</pre>
+```
 
 - **Vectorize**: Sử dụng `TfidfVectorizer` hoặc `CountVectorizer` để chuyển đổi những `texts` thành đặc trưng số
 
@@ -84,26 +84,26 @@ labels = [1, 0, 1, 0, 1, 0] # 1 for positive, 0 for negative
     - `RegexTokenizer`: token hóa văn bản.
     - `CountVectorizer, TfidfVectorizer`: để vector háo văn bản sau khi token hóa.
 
-    <pre>
+    ```python
     regexTokenizer = RegexTokenizer()
     countVectorizer = CountVectorizer(tokenizer=regexTokenizer)
     tfidfVectorizer = TfidfVectorizer()
-    </pre>
+    ```
 
 - Huấn luyện và đánh giá mô hình:
     - Với `CountVectorizer`:
-        <pre>
+        ```python
         textClassifier_count = TextClassifier(vectorizer=countVectorizer)
         textClassifier_count.fit(X_train, y_train)
         y_pred_count = textClassifier_count.predict(X_test)
         print(f"Count Vectorizer Evaluation\n", textClassifier_count.evaluate(y_test, y_pred_count))
-        </pre>
+        ```
         
         - Kết quả:
-        <pre>
+        ```python
         Count Vectorizer Evaluation
         {'accuracy': 0.5, 'precision': 0.5, 'recall': 1.0, 'f1_score': 0.6666666666666666}
-        </pre>
+        ```
 
         - Nhận xét: 
             - Mô hình với `CountVectorizer` chỉ dự đoán đúng một nửa số mẫu kiểm tra. Điều này cho thấy khả năng tổng thể của mô hình chưa tốt.
@@ -111,18 +111,18 @@ labels = [1, 0, 1, 0, 1, 0] # 1 for positive, 0 for negative
             - Điều này cho thấy phương pháp CountVectorizer chưa đủ mạnh để xử lý bài toán phân loại văn bản có ít dữ liệu huấn luyện.
 
     - Với `TfidfVectorizer`:
-        <pre>
+        ```python
         textClassifier_tfidf = TextClassifier(vectorizer=tfidfVectorizer)
         textClassifier_tfidf.fit(X_train, y_train)
         y_pred_tfidf = textClassifier_tfidf.predict(X_test)
         print(f"TF-IDF Vectorizer Evaluation\n", textClassifier_tfidf.evaluate(y_test, y_pred_tfidf))
-        </pre>
+        ```
 
         - Kết quả:
-        <pre>
+        ```python
         TF-IDF Vectorizer Evaluation
         {'accuracy': 0.5, 'precision': 0.5, 'recall': 1.0, 'f1_score': 0.6666666666666666}
-        </pre>
+        ```
 
         - Nhận xét:
             - Việc chuyển từ `CountVectorizer` sang `TF-IDF Vectorizer` không làm thay đổi hiệu suất mô hình — các chỉ số đều giữ nguyên.
@@ -144,20 +144,20 @@ labels = [1, 0, 1, 0, 1, 0] # 1 for positive, 0 for negative
     - Cách chạy (Đứng tại thư mục `NLP`): `python -m Lab5.test.lab5_spark_sentiment_analysis`
 
     - Bước 1: Khởi tạo SparkSession
-        <pre>
+        ```python
         spark = SparkSession.builder.appName("SentimentAnalysis").getOrCreate()
-        </pre>
+        ```
         - Đây là điểm khởi đầu của mọi ứng dụng Spark.
         - Cho phép tạo, quản lý và truy cập các DataFrame phân tán trên cluster.
         - `appName` giúp định danh tiến trình trong Spark UI để theo dõi hiệu năng.
 
     - Bước 2: Tải và tiền xử lý dữ liệu
-        <pre>
+        ```python
         df = spark.read.csv("Data/sentiments.csv", header=True, inferSchema=True)
         df = df.withColumn("label", (col("sentiment").cast("integer") + 1) / 2)
         initial_row_count = df.count()
         df = df.dropna(subset=["sentiment"])
-        </pre>
+        ```
 
         - Đọc dữ liệu file `Data/sentiments.csv` chứa hai cột:
             - `text`: câu văn bản.
@@ -168,12 +168,12 @@ labels = [1, 0, 1, 0, 1, 0] # 1 for positive, 0 for negative
     - Bước 3: Xây dựng Pipeline tiền xử lý
         - Spark ML sử dụng mô hình Pipeline bao gồm chuỗi các Transformer (biến đổi dữ liệu) và Estimator (thuật toán huấn luyện).
 
-        <pre>
+        ```python
         tokenizer = Tokenizer(inputCol="text", outputCol="words")
         stopwordsRemover = StopWordsRemover(inputCol="words", outputCol="filtered_words")
         hashingTF = HashingTF(inputCol="filtered_words", outputCol="rawFeatures", numFeatures=10000)
         idf = IDF(inputCol="rawFeatures", outputCol="features")
-        </pre>
+        ```
 
         - `tokenizer`: tách văn bản thành các từ riêng lẻ.
         - `stopwordRemover`: loại bỏ các từ dừng phổ biến giúp giảm nhiễu.
@@ -181,13 +181,13 @@ labels = [1, 0, 1, 0, 1, 0] # 1 for positive, 0 for negative
         - `idf`: giảm trọng số của các từ xuất hiện thường xuyên, làm nổi bật các từ đặc trưng hơn trong toàn bộ tập văn bản.
     
     - Bước 4: Huấn luyện mô hình Logistic Regression
-        <pre>
+        ```python
         lr = LogisticRegression(featuresCol="features", labelCol="label", maxIter=10,   regParam=0.0001)
         pipeline = Pipeline(stages=[tokenizer, stopwordsRemover, hashingTF, idf, lr])
 
         train, test = df.randomSplit([0.8, 0.2], seed=42)
         model = pipeline.fit(train)
-        </pre>
+        ```
 
         - Mô hình Logistic Regression là thuật toán phân loại tuyến tính đơn giản nhưng hiệu quả trong bài toán phân loại cảm xúc.
         - `Pipeline` gộp tất cả các bước xử lý thành một chuỗi thống nhất.
@@ -200,7 +200,7 @@ labels = [1, 0, 1, 0, 1, 0] # 1 for positive, 0 for negative
         $\Rightarrow$ Giúp đảm bảo tính tái sử dụng và nhất quán khi áp dụng lên dữ liệu mới (train và test).
 
     - Bước 5: Đánh giá mô hình
-        <pre>
+        ```python
         predictions = model.transform(test)
         evaluator_acc = MulticlassClassificationEvaluator(labelCol="label", predictionCol="prediction", metricName="accuracy")
         evaluator_f1 = MulticlassClassificationEvaluator(labelCol="label", predictionCol="prediction", metricName="f1")
@@ -209,7 +209,7 @@ labels = [1, 0, 1, 0, 1, 0] # 1 for positive, 0 for negative
 
         print("Accuracy:", accuracy)
         print("F1 Score:", f1)
-        </pre>
+        ```
 
         - `transform()`: áp dụng toàn bộ pipeline lên tập kiểm thử, tự động thực hiện mọi bước tiền xử lý.
         - `MulticlassClassificationEvaluator` được sử dụng để tính toán các chỉ số đánh giá như `Accuracy, F1-score`.
