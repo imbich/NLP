@@ -878,3 +878,45 @@ Câu: I love NLP
 Dự đoán: [('I', 'PRON'), ('love', 'VERB'), ('NLP', 'NOUN')]
 ```
 
+
+## Kết luận
+1. **Part 1 — Làm quen với PyTorch**
+   - Nắm vững các khái niệm cơ bản: Tensor, autograd, nn.Module.
+   - Thực hành tạo và thao tác Tensor, tính đạo hàm tự động.
+   - Xây dựng mô hình đơn giản kết hợp Embedding, Linear, ReLU.
+
+2. **Part 2 — Phân loại văn bản với RNN/LSTM**
+   - So sánh 4 phương pháp: TF-IDF+LR, Word2Vec(Avg)+Dense, Embedding(Pre-trained)+LSTM, Embedding(Scratch)+LSTM.
+   - Kết quả định lượng cho thấy TF-IDF+Logistic Regression vẫn là baseline mạnh nhất (F1=0.82, loss=1.05).
+   - Word2Vec trung bình và LSTM không hiệu quả trên dữ liệu nhỏ do thiếu dữ liệu huấn luyện.
+
+3. **Part 3 — POS Tagging với RNN**
+   - Xây dựng pipeline hoàn chỉnh: load dữ liệu .conllu $\rightarrow$ xây dựng từ điển $\rightarrow$ PyTorch Dataset/DataLoader $\rightarrow$ mô hình RNN.
+   - Đạt độ chính xác 96.62% trên tập train, 87.91% trên tập dev.
+   - Mô hình có thể dự đoán nhãn POS cho câu mới với độ chính xác cao.
+
+### Khuyến nghị cho các dự án tương lai
+
+1. **Luôn bắt đầu với baseline đơn giản** (TF-IDF + Logistic Regression) để kiểm tra.
+2. **Nếu cần xử lý ngữ cảnh phức tạp:**
+   - Dùng LSTM hoặc Transformer (nếu có đủ dữ liệu và tài nguyên).
+   - Sử dụng pre-trained embeddings từ corpus lớn (GloVe, FastText, BERT).
+3. **Luôn kiểm tra data augmentation** nếu dữ liệu hạn chế.
+4. **Dùng cross-validation** để đảm bảo mô hình không overfitting.
+5. **Ghi log chi tiết** (loss, metrics) để theo dõi quá trình huấn luyện.
+
+### Những khó khăn gặp phải và giải pháp
+
+| Khó khăn | Nguyên nhân | Giải pháp |
+|---|---|---|
+| LSTM overfitting | Dữ liệu nhỏ, mô hình quá phức tạp | Giảm layer, thêm Dropout, dữ liệu augmentation |
+| Embedding không hiệu quả | Pre-trained từ corpus nhỏ hoặc không phù hợp | Dùng pre-trained từ corpus lớn (Wikipedia, Common Crawl) |
+| Model không converge | Learning rate quá cao/thấp, initialization sai | Thử learning rate khác, weight initialization |
+
+
+## Tham khảo
+- POS Tagging in NLP: https://www.geeksforgeeks.org/nlp/nlp-part-of-speech-default-tagging/
+
+- LSTM: https://viblo.asia/p/tim-hieu-lstm-bi-quyet-giu-thong-tin-lau-dai-hieu-qua-MG24BaezVz3
+
+- Part-of-speech-based Long Short-Term Memory Network for Learning Sentence Representations: Part-of-speech-based Long Short-Term Memory Network for Learning Sentence Representations
