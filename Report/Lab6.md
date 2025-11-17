@@ -306,6 +306,7 @@ Xây dụng, huấn luyện và so sánh hiệu năng giữa các mô hình:
 4. Embedding Layer (học từ đầu) + LSTM.
 
 #### Phần 2: Thực hành
+- Được triển khai trong `Lab6/rnn_token_classification.ipynb` và ` rnns_text_classification.ipynb`
 
 1. Đọc dữ liệu
     ```python
@@ -635,6 +636,7 @@ Xây dụng, huấn luyện và so sánh hiệu năng giữa các mô hình:
 (POS) Tagging.
 
 #### Các bước thực hiện
+- Được triển khai trong `Lab6/rnn_for_pos_tagging.ipynb`
 ##### Task 1: Tải và tiền xử lý dữ liệu
 1. Viết hàm đọc file `.conllu`
 ```python
@@ -848,6 +850,10 @@ Kết quả đánh giá trên Train và trên Dev:
 Độ chính xác trên Dev: 87.91%
 ```
 
+- Hiệu suất trên train rất cao, chứng tỏ mô hình đã học tốt các mẫu trong tập huấn luyện.
+- Hiệu suất trên dev thấp hơn so với train nhưng vẫn khá cao, cho thấy mô hình tổng quát tốt trên dữ liệu chưa gặp trước đó.
+- Chênh lệch ~9% giữa train và dev cho thấy có một chút overfitting, nhưng mức này chưa quá nghiêm trọng.
+
 - Hàm `predict_sentence(sentence)` nhận vào một câu mới, xử lý và in ra các cặp (từ, nhãn_dự_đoán)
 
 ```python
@@ -877,7 +883,8 @@ print(f"Dự đoán:", predict_sentence(s))
 Câu: I love NLP
 Dự đoán: [('I', 'PRON'), ('love', 'VERB'), ('NLP', 'NOUN')]
 ```
-
+- Câu "I love NLP" được mô hình dự đoán chính xác từng token: Điều này cho thấy mô hình hiểu được vai trò cú pháp của từng từ trong câu dù câu ngắn hay câu dài.
+- Mặc dù mô hình được huấn luyện trên tập dữ liệu lớn, việc dự đoán chính xác trên câu chưa xuất hiện trong tập huấn luyện cho thấy LSTM có khả năng tổng quát hóa token-level nhờ thông tin ngữ cảnh.
 
 ## Kết luận
 1. **Part 1 — Làm quen với PyTorch**
