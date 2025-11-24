@@ -47,8 +47,8 @@
 
 3. Xây dựng từ điển
 
-    - $\texttt{word\_to\_ix}$: Ánh xạ mỗi từ duy nhất sang một chỉ số nguyên.
-    - $\texttt{tag\_to\_ix}$: Ánh xạ mỗi nhãn NER duy nhất sang một chỉ số nguyên.
+    - `word_to_ix`$: Ánh xạ mỗi từ duy nhất sang một chỉ số nguyên.
+    - `tag_to_ix`$: Ánh xạ mỗi nhãn NER duy nhất sang một chỉ số nguyên.
     - Kết quả: 
         ```python
         Số lượng từ trong word_to_ix: 23625
@@ -61,7 +61,7 @@
 1. Tạo lớp $\texttt{NERDataset}$: Kế thừa $\texttt{torch.utils.data.Dataset}$
 2. Tạo $\texttt{DataLoader}$
 - Khởi tạo $\texttt{DataLoader}$ cho cả train và validation
-- Hàm $\texttt{collate\_fn}$ để đệm các câu và nhãn trong cùng một batch về cùng độ dài.
+- Hàm `collate_fn`$ để đệm các câu và nhãn trong cùng một batch về cùng độ dài.
 
 ### Task 3: Xây dựng mô hình RNN
 - Mô hình bao gồm 3 lớp chính:
@@ -69,7 +69,7 @@
     - $\texttt{nn.LSTM}$ (Bi-LSTM): Xử lý chuỗi vector embedding.
     - $\texttt{nn.Linear}$: Ánh xạ output của LSTM sang không gian nhãn để dự đoán.
 
-- Khởi tạo mô hình với $\texttt{vocab\_size=len(word\_to\_ix), embedding\_dim=100, hidden\_dim=128, output\_size=len(tag\_to\_ix), padding\_idx=word\_to\_ix["<PAD>"]}$
+- Khởi tạo mô hình với `vocab_size=len(word_to_ix), embedding_dim=100, hidden_dim=128, output_size=len(tag_to_ix), padding_idx=word_to_ix["<PAD>"]`$
 
 ### Task 4: Huấn luyện mô hình
 1. Khởi tạo
@@ -126,7 +126,7 @@
     Độ chính xác trên tập validation: 0.9514
     ```
 
-- Ví dụ dự đoán với câu mới (sử dụng hàm $\texttt{predict\_sentence(sentence)}$):
+- Ví dụ dự đoán với câu mới (sử dụng hàm `predict_sentence(sentence)`):
     - Câu : **"VNU University is located in Hanoi"**
     - Dự đoán :
         ```python
